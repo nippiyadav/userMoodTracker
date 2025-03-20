@@ -11,5 +11,6 @@ const Textarea = forwardRef<HTMLTextAreaElement>((props,ref)=>{
     </div>
   )
 })
+Textarea.displayName = "Textarea"
 
 export default Textarea

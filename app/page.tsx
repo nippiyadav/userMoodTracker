@@ -7,10 +7,11 @@ import Button from '@/app/components/Submit';
 import { XCircle } from 'lucide-react';
 import TodayMood from '@/app/components/TodayMood';
 import { useMoodContextValue } from '@/context/ContextProvider';
+import MontlyMood from './components/MontlyMood';
 
 function Page() {
   // this is context which are holding value
-  const {moodValue,setMoodValue} = useMoodContextValue();
+  const { setMoodValue } = useMoodContextValue();
 
   // this is for the getting value of selection, we can use simply but we are using like this for that we can reuse this as many time as want
   const selectionRef = useRef<HTMLSelectElement>(null);
@@ -20,14 +21,16 @@ function Page() {
 
   // this is for the setting error 
   const [error, setError] = useState<string>("");
-
+  console.log(error);
+  
   // this is for opening the form
   const [openForm, setOpenForm] = useState<boolean>(false);
+
 
   const moodFormSubmission = () => {
     const selectionMood = selectionRef.current?.value;
     const textareaText = textareaRef.current?.value;
-    const filterEmoji = MoodsProps.filter((data,index)=> data.name===selectionMood);
+    const filterEmoji = MoodsProps.filter((data) => data.name === selectionMood);
 
     console.log("SelectionMood:- ", selectionMood, "\n", "textareaText:- ", textareaText);
 
@@ -48,23 +51,23 @@ function Page() {
     }
 
     // this is the value is being sent 
-    setMoodValue((prev)=>{
-      return [newMoodValue,...prev]
+    setMoodValue((prev) => {
+      return [newMoodValue, ...prev]
     })
 
     if (textareaRef.current?.value) {
-      textareaRef.current.value="";
+      textareaRef.current.value = "";
       setOpenForm(false)
     }
 
   }
 
   return (
-    <main>
+    <main className='lg:w-[80%] mx-auto'>
       {/* mood adder */}
-      <div className='bg-gray-400 p-2 rounded-md w-[95%] mx-auto'>
-        <div>
-          <h1 className='text-center font-bold text-4xl'>Mood Tracker</h1>
+      <div className='bg-gray-600/50 backdrop-blur-xl p-2 rounded-md w-[95%] mx-auto'>
+        <div className='text-white'>
+          <h1 className='text-center font-bold text-4xl mb-4'>Mood Tracker</h1>
           {/* this is for adding mood of user */}
           <div>
             <div className='bg-pink-500 w-15 h-15  flex justify-center items-center font-bold rounded-full leading-20 shadow-md cursor-pointer scale-100 active:scale-95' onClick={() => setOpenForm(true)}>
@@ -83,12 +86,12 @@ function Page() {
               ))}
             </div>
 
-            {/* mood of emoji insert */}
-            <div className={`w-full h-full fixed bg-gray-400/60 flex justify-center items-center top-0 left-0 ${openForm ? "block" : "hidden"}`}>
+            {/* mood of emoji insert form */}
+            <div className={`w-full h-screen fixed bg-gray-400/0 flex justify-center items-center top-0 left-0 z-[999] ${openForm ? "block" : "hidden"}`}>
               <form onSubmit={(e) => {
                 e.preventDefault();
                 moodFormSubmission();
-              }} className='flex flex-col gap-4 w-[444px] bg-red-400 p-4 rounded-md shadow-md relative'>
+              }} className='flex flex-col gap-4 w-[444px] bg-red-400 p-4 rounded-md shadow-md relative text-black'>
                 <XCircle className='absolute right-[-10] top-[-10] scale-100 focus:scale-105 cursor-pointer' fill='red' scale={2} onClick={() => setOpenForm(false)} />
                 <h1 className='font-bold text-center text-xl'>Mood Form Submission</h1>
                 <Selection ref={selectionRef} />
@@ -97,12 +100,14 @@ function Page() {
               </form>
             </div>
 
+            {/* todayMood Components */}
+            <TodayMood />
+
+            {/* monthly Components */}
+            <MontlyMood />
           </div>
         </div>
       </div>
-
-      {/* todayMood Components */}
-      <TodayMood />
 
     </main>
   )

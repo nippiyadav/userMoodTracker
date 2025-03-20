@@ -15,4 +15,6 @@ const Selection = forwardRef<HTMLSelectElement>((props,ref)=>{
   )
 })
 
+Selection.displayName = "Selection"
+
 export default Selection

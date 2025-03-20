@@ -1,4 +1,4 @@
-import { MoodValueProps, useMoodContextValue } from '@/context/ContextProvider'
+import { useMoodContextValue } from '@/context/ContextProvider'
 import React, { useEffect, useState } from 'react'
 
 // i am using writing some modifined because i want to add also the days and timming in the data
@@ -27,12 +27,12 @@ function TodayMood() {
             console.log("Date of Making:- ", date.toDateString(), date.toLocaleTimeString(), date.toLocaleDateString());
     
             // this filter will retrun only today value 
-            const todaymoodFilter = value.moodValue.filter((data, index) => {
+            const todaymoodFilter = value.moodValue.filter((data) => {
                 const checkingDate = new Date();
                 if (new Date(data.date).toDateString() === checkingDate.toDateString()) {
                     return true
                 } else {
-                    false
+                    return false
                 }
             });
     
@@ -40,7 +40,7 @@ function TodayMood() {
             console.log("todayMoodFilter:- ", todaymoodFilter);
     
             // i am changing the date property with the object
-            const todayMapping = todaymoodFilter.map((data, index) => {
+            const todayMapping = todaymoodFilter.map((data) => {
                 const newData = { ...data, date: { days: new Date(data.date).toDateString(), timming: new Date(data.date).toLocaleTimeString() } };
                 return newData
             });
@@ -55,16 +55,16 @@ function TodayMood() {
     }, [value.moodValue])
 
     return (
-        <div className='bg-gray-400 p-2 rounded-md w-[95%] mx-auto mt-4'>
+        <div className='bg-gray-600/50 backdrop-blur-xl p-2 rounded-md w-[95%] mx-auto mt-4'>
             <div>
-                <h1 className='text-2xl font-bold text-center'>Today Mood</h1>
+                <h1 className='text-2xl font-bold text-center text-white'>Today Mood</h1>
             </div>
             <div>
                 {todatMood.length>0 ?
                     (<>
                         <div className='overflow-x-auto mt-2 flex gap-2'>{todatMood.map((data, index) => (
                             <div key={index}>
-                                <div className='flex items-start flex-col gap-2 justify-start bg-white p-2 w-40 rounded-md shadow-md mb-2'>
+                                <div className='flex items-start flex-col gap-2 justify-start bg-white/20 backdrop-blur-2xl p-2 w-40 rounded-md shadow-md mb-2'>
                                     <div>
                                         <span className='text-4xl'>{data.mood.emoji}</span>
                                         <span className='text-2xl font-bold'>{data.mood.name}</span>
