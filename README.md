@@ -1,4 +1,4 @@
-# Youtube Like Fronend
+# UserMood Tracker Like Fronend
 
 ## Requirements 🚀 😄 ❤️
 - Users pick a mood emoji (happy, sad, neutral, excited, etc.) for the day ✅
